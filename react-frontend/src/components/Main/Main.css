@@ -1,0 +1,84 @@
+.bg-test {
+  /* The image used */
+  background-image: url(http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.wrapper {
+  color: #bcc2d1 !important;
+}
+.middle-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.middle-box {
+  height: 600px;
+  max-height: calc(
+    100vh - calc(var(--site-header-height) + var(--site-header-margin)) - 2vmin
+  );
+  width: 600px;
+  margin: auto;
+}
+.tabs {
+  justify-content: center;
+  align-items: flex-end;
+  border-bottom: 2px solid #404040;
+}
+.tabs span.active {
+  color: #d64f00;
+}
+.tabs span {
+  flex: 1 1 auto;
+  text-align: center;
+  padding: 0.5em 0.2em;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.25s;
+  min-width: 15%;
+  letter-spacing: -0.5px;
+}
+.middle-box-content {
+  display: flex;
+  position: relative;
+  background: #262421;
+  background-size: 100% 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  flex-wrap: wrap;
+}
+.middle-box-content > div {
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #404040;
+  background: rgba(186, 186, 186, 0.05);
+  color: #bababa;
+  transition: all 150ms;
+  margin: 25px;
+  width: 150px;
+  height: 150px;
+  cursor: Pointer;
+}
+.middle-box-content > div:hover {
+  background: rgba(214, 79, 0, 0.5);
+}
+
+.clock,
+.perf {
+  display: block;
+  font-size: 1.5em;
+  line-height: 1.6em;
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-top: 25px;
+}
