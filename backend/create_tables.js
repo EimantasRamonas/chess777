@@ -16,6 +16,8 @@ q3 =
 q4 = "DROP TABLE IF EXISTS `games`";
 q5 = "DROP TABLE IF EXISTS `users`";
 q6 = "DROP TABLE IF EXISTS `Reports`";
+q7 =
+  "CREATE TRIGGER `games_update` BEFORE UPDATE ON `games`FOR EACH ROW BEGINIF OLD.white_username IS NOT NULL THENSET NEW.white_username = OLD.white_username;END IF; IF OLD.black_username IS NOT NULL THENSET NEW.black_username = OLD.black_username;END IF;IF OLD.game_id IS NOT NULL THENSET NEW.game_id = OLD.game_id;END IF;END";
 
 connection.query(q4, function (err, rows, fields) {
   connection.query(q1, function (err, rows, fields) {
@@ -23,9 +25,12 @@ connection.query(q4, function (err, rows, fields) {
       connection.query(q2, function (err, rows, fields) {
         connection.query(q6, function (err, rows, fields) {
           connection.query(q3, function (err, rows, fields) {
+            connection.query(q7, function (err, rows, fields) {
+              if (err) throw err;
+              console.log("Database tables created!");
+              process.exit(1);
+            });
             if (err) throw err;
-            console.log("Database tables created!");
-            process.exit(1);
           });
           if (err) throw err;
         });
