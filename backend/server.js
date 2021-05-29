@@ -56,24 +56,6 @@ io.on("connection", (socket) => {
       arg.gameID +
       "'";
     connection.query(query_str, function (err, rows, fields) {
-      // console.log("WHITE USERNAME: " + rows[0].white_username);
-      // console.log("CLIENT USERNAME: " + arg.username);
-      // if (rows[0].white_username == arg.username) {
-      //   console.log("THIS GUY IS WHITE " + arg.username);
-      //   let data = {
-      //     username: arg.username,
-      //     color: 0,
-      //   };
-      //   socket.emit("get_color", data);
-      // } else {
-      //   console.log("THIS GUY IS BLACK " + arg.username);
-      //   let data = {
-      //     username: arg.username,
-      //     color: 1,
-      //   };
-      //   socket.emit("get_color", data);
-      // }
-
       let data = {
         white_username: rows[0].white_username,
         black_username: rows[0].black_username,

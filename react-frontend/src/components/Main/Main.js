@@ -11,6 +11,8 @@ import { ButtonGroup } from "react-bootstrap";
 
 import { io } from "socket.io-client";
 
+var config = require("../../config.js");
+
 export default function Main() {
   useEffect(() => {
     if (localStorage.getItem("token") != undefined) {
@@ -18,21 +20,17 @@ export default function Main() {
       setUsername(data.name);
     }
 
-    const socket = io.connect("http://193.219.91.103:8443/");
+    const socket = io.connect(config.socketURL);
     window.socket = socket;
     socket.on("gameFound", (arg) => {
       console.log("TURETU PERMEST");
       console.log(arg);
       let URL = "/game/" + arg.gameID;
 
-      if(username == arg.user1 || username == arg.user2) 
-      {
+      if (username == arg.user1 || username == arg.user2) {
         history.push(URL);
       }
-      
-      
     });
-
   });
   const [gameType, setGameType] = useState();
   const [username, setUsername] = useState();
@@ -100,15 +98,27 @@ export default function Main() {
                 vertical
                 onClick={(e) => setGameType(e.target.value)}
               >
-                <Button onClick={searchForUnratedMatch} variant="secondary" value="unrated">
+                <Button
+                  onClick={searchForUnratedMatch}
+                  variant="secondary"
+                  value="unrated"
+                >
                   Unrated
                 </Button>
                 <br></br>
-                <Button onClick={searchForRatedMatch} variant="secondary" value="rated">
+                <Button
+                  onClick={searchForRatedMatch}
+                  variant="secondary"
+                  value="rated"
+                >
                   Rated
                 </Button>
                 <br></br>
-                <Button onClick={searchForMatch} variant="secondary" value="friends">
+                <Button
+                  onClick={searchForMatch}
+                  variant="secondary"
+                  value="friends"
+                >
                   Play with friends
                 </Button>
               </ButtonGroup>
@@ -122,40 +132,38 @@ export default function Main() {
     history.push("/game");
   }
 
-  function searchForUnratedMatch()
-  {
-      fetch("http://193.219.91.103:8305/joinUnratedQueue", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify({username}),
-      }).then((data) => console.log(data));
+  function searchForUnratedMatch() {
+    URL = config.apiURL + "/joinUnratedQueue";
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    }).then((data) => console.log(data));
 
     //console.log(JSON.stringify(username));
   }
 
-    function searchForRatedMatch()
-    {
-        fetch("http://193.219.91.103:8305/joinRatedQueue", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({username}),
-        }).then((data) => console.log(data));
+  function searchForRatedMatch() {
+    URL = config.apiURL + "/joinRatedQueue";
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    }).then((data) => console.log(data));
 
-        //console.log(JSON.stringify(username));
-    }
+    //console.log(JSON.stringify(username));
+  }
 
   function searchForMatch() {
     // pagal game type ziuresim ka reikia padaryti
     // console.log(gameType);
 
-    
-      let URL = "/game/" + makeid(10);
-      history.push(URL);
-    
+    let URL = "/game/" + makeid(10);
+    history.push(URL);
   }
 
   function makeid(length) {

@@ -10,8 +10,9 @@ import Card from "react-bootstrap/Card";
 
 import { io } from "socket.io-client";
 
+var config = require("../../config.js");
+
 export default function Game() {
-  //const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const [color, setColor] = useState();
   const [gameType, setGameType] = useState();
   useEffect(() => {
@@ -77,15 +78,13 @@ export default function Game() {
       };
       localStorage.setItem("token", JSON.stringify(userToken));
     }
-    const socket = io.connect("http://193.219.91.103:8443/");
+    const socket = io.connect(config.socketURL);
     window.socket = socket;
     let clientData = {
       gameID: gameID,
       username: username,
     };
 
-
-    //CIA REIKIA PAKEISTI
     socket.emit("joinGame", clientData);
 
     socket.on("color", (arg) => {
@@ -96,28 +95,28 @@ export default function Game() {
       // start game when u get color
     });
 
-      socket.emit("send_color", clientData);
-      socket.on("get_color", (arg) => {
+    socket.emit("send_color", clientData);
+    socket.on("get_color", (arg) => {
       console.log(arg);
-      // if(arg.username == this.state.username) this.state.color = arg.color;
 
       console.log(gameID == arg.gameID);
-      if(gameID == arg.gameID && arg.white_username != null && arg.black_username != null)
-      {
+      if (
+        gameID == arg.gameID &&
+        arg.white_username != null &&
+        arg.black_username != null
+      ) {
         console.log("MY NAME: " + username);
         console.log("WHITE: " + arg.white_username);
         console.log("BLACK: " + arg.black_username);
 
         let correctColor;
 
-        if(username == arg.white_username) correctColor = "white";
-        if(username == arg.black_username) correctColor = "black";
-
+        if (username == arg.white_username) correctColor = "white";
+        if (username == arg.black_username) correctColor = "black";
 
         setColor(correctColor);
         console.log(correctColor);
-      } 
-      
+      }
     });
   }
 

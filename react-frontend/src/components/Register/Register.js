@@ -9,16 +9,18 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
+var config = require("../../config.js");
+
 export default function Register() {
   var history = useHistory();
   async function handleSubmit(event) {
-    //console.log(email + " " + username + " " + password + " " + password2);
     event.preventDefault();
 
     if (password != password2) {
       alert("Passwords don't match!");
     } else {
-      fetch("http://193.219.91.103:8305/register", {
+      var URL = config.apiURL + "/register";
+      fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

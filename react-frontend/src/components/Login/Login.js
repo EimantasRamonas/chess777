@@ -10,8 +10,11 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
+var config = require("../../config.js");
+
 async function loginUser(credentials) {
-  return fetch("http://193.219.91.103:8305/login", {
+  var URL = config.apiURL + "/login";
+  return fetch(URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +24,8 @@ async function loginUser(credentials) {
 }
 
 async function forgotPasssword() {
-  fetch("http://193.219.91.103:8305/forgot", {
+  var URL = config.apiURL + "/forgot";
+  fetch(URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -88,7 +92,9 @@ export default function Login({ setToken }) {
                 >
                   Login
                 </Button>
-                <footer><a href="/forgotpassword">Forgot password?</a></footer>
+                <footer>
+                  <a href="/forgotpassword">Forgot password?</a>
+                </footer>
               </Form>
             </Card.Body>
           </Card>
